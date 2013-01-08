@@ -1,3 +1,4 @@
+var stringer;
 var alertme = function () {
     //alert(parseInt(FL.value) + parseInt(CR.value) );
     //alert("help");
@@ -40,6 +41,6 @@ var dataTable = {
 }
 
 
-submit.onclick = alertme;
+submit.onclick = alertme();
 
 
