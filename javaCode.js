@@ -48,6 +48,6 @@ stdGA: [3,	1.1,	1.7,	1.1,	N,	N,	14.9,	1.4,	1.4,	1.4,	1.2,	1.2,	1.2,	0.9,	0.9,	0.
 }
 
 
-submit.onclick = alertme();
+submit.onclick = alert("here works");
 
 
