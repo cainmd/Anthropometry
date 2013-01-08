@@ -1,7 +1,9 @@
 var stringer;
 var alertme = function () {
+    alert (parseInt(flinput.value) + 2);
     if (parseInt(flinput.value) >= dataTable.meanGA[1]){
-        stringer = "Your foot length is bigger than" + String(dataTable.meanGA[1]);
+        stringer = "Your foot length is bigger than"; 
+        //+ String(dataTable.meanGA[1]);
     }
     else {stringer = "smaller than"}
     alert(stringer);
