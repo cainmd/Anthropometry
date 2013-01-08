@@ -12,8 +12,14 @@ var alertme = function () {
 }
 
 var form1 = document.getElementById("form1");
+function whenLoaded() {   
 
 var submit = document.getElementById("submit");
+    
+  submit.addEventListener("click", alertme(), false);   
+}   
+
+document.addEventListener("DOMContentLoaded", whenLoaded, false);
 //var flinput = document.getElementById("flInput");
 //var crinput = document.getElementById("crInput");
 var FL = document.getElementById("FL");
@@ -41,6 +47,6 @@ var dataTable = {
 }
 
 
-submit.onclick = alertme();
+//submit.onclick = alertme();
 
 
