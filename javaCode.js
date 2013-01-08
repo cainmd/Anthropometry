@@ -14,7 +14,7 @@ var alertme = function () {
 var form1 = document.getElementById("form1");
 function whenLoaded() {   
 
-//var submit = document.getElementById("submit");
+var submit = document.getElementById("submit");
     
   //submit.addEventListener("click", alertme(), false);   
 /}   
