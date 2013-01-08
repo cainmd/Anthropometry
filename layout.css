@@ -31,7 +31,7 @@ input {
 }
 
 .button, button{
-    padding: 100px;
+    text-align: right;
 }
 
 .clear { clear: both; height: 0; line-height: 0; }
