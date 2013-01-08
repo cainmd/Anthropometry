@@ -1,11 +1,11 @@
 form {
     text-align: right;
     width: 400px;
-    //background-color = green
+    background-color = green
 }
 
 body{
-    background-color = green;    
+    background-color : green;    
 
 }
 
@@ -26,7 +26,7 @@ input {
     //width: 250px;
 }
 
-button{
+.button, button{
     padding: 100px;
 }
 
