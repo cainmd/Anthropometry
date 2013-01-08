@@ -22,7 +22,7 @@ var form1 = document.getElementById("form1");
 
 //document.addEventListener("DOMContentLoaded", whenLoaded(), false);
 var submit = document.getElementById("submit");
-submit.onclick = alert("here works");
+submit.onclick = alertme();
 
 //var flinput = document.getElementById("flInput");
 //var crinput = document.getElementById("crInput");
