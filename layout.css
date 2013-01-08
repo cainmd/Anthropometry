@@ -1,15 +1,19 @@
 form {
     text-align: right;
     width: 400px;
-    background-color : yellow
+    background-color : gray;
+}
+
+head h1,h2,h3{
+    color: white;
 }
 
 body{
-    background-color : green;    
+    background-color : blue;    
 
 }
 
-label{
+form_1.label{
     display: inline-block;
     //float: left;
     //clear: left;
