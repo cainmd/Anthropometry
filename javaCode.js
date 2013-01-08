@@ -13,14 +13,16 @@ var alertme = function () {
 
 var form1 = document.getElementById("form1");
 
-function whenLoaded() {   
+//function whenLoaded() {   
 
-    var submit = document.getElementById("submit");
+    //
     
-    submit.addEventListener("click", alert("here"), false);   
-    }   
+    //submit.addEventListener("click", alert("here"), false);   
+  //  }   
 
-document.addEventListener("DOMContentLoaded", whenLoaded(), false);
+//document.addEventListener("DOMContentLoaded", whenLoaded(), false);
+var submit = document.getElementById("submit");
+submit.onclick = alert("here works");
 
 //var flinput = document.getElementById("flInput");
 //var crinput = document.getElementById("crInput");
@@ -49,6 +51,6 @@ stdGA: [3,	1.1,	1.7,	1.1,	N,	N,	14.9,	1.4,	1.4,	1.4,	1.2,	1.2,	1.2,	0.9,	0.9,	0.
 }
 
 
-//submit.onclick = alert("here works");
+
 
 
