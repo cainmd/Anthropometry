@@ -1,6 +1,12 @@
 form {
     text-align: right;
     width: 400px;
+    //background-color = green
+}
+
+body{
+    background-color = green;    
+
 }
 
 label{
@@ -19,6 +25,8 @@ input {
   //float: left;
     //width: 250px;
 }
+
+
 .clear { clear: both; height: 0; line-height: 0; }
 .floatright { float: right; }
 }
