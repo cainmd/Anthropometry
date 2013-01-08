@@ -31,8 +31,6 @@ var SW = document.getElementById("SW");
 var KW = document.getElementById("KE");
 var AW = document.getElementById("AW");
 
-submit.onclick = alertme;
-
 
 
 var dataTable = {
@@ -42,4 +40,6 @@ var dataTable = {
 }
 
 
-confirm.onclick = alertme;
+submit.onclick = alertme;
+
+
