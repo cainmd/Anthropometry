@@ -26,6 +26,9 @@ input {
     //width: 250px;
 }
 
+button{
+    padding: 100px;
+}
 
 .clear { clear: both; height: 0; line-height: 0; }
 .floatright { float: right; }
