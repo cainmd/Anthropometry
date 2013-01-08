@@ -20,7 +20,7 @@ function whenLoaded() {
     submit.addEventListener("click", alert("here"), false);   
     }   
 
-document.addEventListener("DOMContentLoaded", whenLoaded, false);
+document.addEventListener("DOMContentLoaded", whenLoaded(), false);
 
 //var flinput = document.getElementById("flInput");
 //var crinput = document.getElementById("crInput");
