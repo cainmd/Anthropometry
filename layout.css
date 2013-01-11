@@ -1,37 +1,54 @@
 form {
-    text-align: right;
-    width: 400px;
-    background-color : gray;
+    
+text-align: right;
+    
+width: 400px;
+   
+border-style:solid;
+border-width:5px; 
+background-color : white;
 }
+
+
 
 head h1,h2,h3{
-    color: white;
+   color: white;
 }
+
+
 
 body{
-    background-color : blue;    
 
-}
+background-image:url('bodyBackground.jpg');
+
+background-size: 100% auto;
+
+
+};    
+
+
+
+
 
 form_1.label{
-    display: inline-block;
-    //float: left;
-    //clear: left;
-    //width: 250px;
-    text-align: left;
+    
+display: inline-block;
+    
+//float: left;
+    
+//clear: left;
+    
+//width: 250px;
+    
+text-align: 
+left;
 }
 
-input {
-  //display: inline-block;
-  //float: right; 
-  //text-align: right;
-  //float: center;
-  //float: left;
-    //width: 250px;
-}
+
 
 .button, button{
-    text-align: right;
+   
+ text-align: right;
 }
 
 .clear { clear: both; height: 0; line-height: 0; }
@@ -39,3 +56,34 @@ input {
 }
 
 
+
+
+
+input {
+  
+//display: inline-block;
+  
+//float: right; 
+  
+//text-align: right;
+ 
+ //float: center;
+  
+//float: left;
+   
+ //width: 250px;
+}
+
+
+.popup {
+ /*
+    This class is used for the lightbox effect.
+ */
+    display: none;
+    height: 62%;
+    left: 19%;
+    padding: 1ex;
+    position: fixed;
+    top: 19%;
+    width: 62%;
+}
