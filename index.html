@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
     <head>
@@ -22,7 +22,8 @@
 <tr>
     <td>
 <form name = "form1" id="form_1">
-Gestational Age: <input type="number" name="Gestational Age" id ="gestationalAge">
+
+Gestational Age: <input type="number" name="Gestational Age" id ="GA">
 
 <div>
 Foot Length: <input type="number" name="Foot Length" id ="FL">
@@ -89,13 +90,15 @@ Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW"
    <td valign="top">
    
     <form id="form 2">
-    Choose evaluation type: <select name="evaltype">
+    Choose evaluation type: <select name="evaltype" id = "detAge">
+   
     <option value="Foot Length">Foot Length</option>
     <option value="Body Weight">Body Weight</option>
     
     </select>
     <div>  
-    Degree of Maceration: <select name="evaltype">
+    Degree of Maceration: <select name="evaltype" id = "maceration">
+    
     <option value="None to mild">None to mild</option>
     <option value="Moderate">Moderate</option>
     <option value="Severe">Severe</option>
@@ -109,6 +112,11 @@ Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW"
  <br></br>
  <input type="button" value="Submit" id ="submit" >
 
+<div>
+<textarea class="popup" id="report-output"></textarea>
+</div>
+
+<script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="javaCode.js"></script>
    </body>
      
