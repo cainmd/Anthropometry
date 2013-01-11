@@ -1,14 +1,44 @@
 //Notes: need to div CC and AC SD by 2! Different paper.
+   
+if (window.hasOwnProperty('jQuery') === false) {
+     // NOTE: It also needs to be version 1.7.2. I have had trouble getting it
+     // to work with "newer" versions of jQuery, and I'm not sure why yet ...
+        throw new Error('jQuery is missing.');
+    }
+
+ // Declarations
+
+
+
+ // Definitions
+
+var $ = window.jQuery;
+
+//used to determine values in maceration columns
+var step;
 
 var stringer;
-
+var expectedRange;
+var correctedRange;
+//need to know if working on expected or corrected
+var iterations;
+var useDet;
+var detEntry;
+var rangeMeas;
 var form1 = document.getElementById("form1");
-
+var gaM;
+var gaSD;
+var GAA;
 
 var submit = document.getElementById("submit");
 
+//var test = alert("here");
+
+
 //add GA to document
-var gestationalAge = "35";
+var GA = document.getElementById("GA");
+//GA = parseInt(GA.value);
+
 var FL = document.getElementById("FL");
 var CR = document.getElementById("CR");
 var CH = document.getElementById("CH");
@@ -25,6 +55,15 @@ var SW = document.getElementById("SW");
 var KW = document.getElementById("KE");
 var AW = document.getElementById("AW");
 
+var s = document.getElementById('detAge');
+var detAge = s.options[s.selectedIndex].value;
+
+var t = document.getElementById('maceration');
+var maceration = s.options[t.selectedIndex].value;
+
+
+
+
 
 //var dataTable = {
 //'12': [12,   9,    7.4,    9.8,    7.1,    NaN,	NaN,	29.6,	4.8,	4.8,	4.8,	1.5,	1.4,	1.3,	0.6,	0.9,	0.9,	0.1,	0.1,	0.1,	0.03,	NaN,	NaN,	0.01,	NaN,	NaN,	0.25,	0.19,	0.19,	0.04,	0.11,	0.11],
@@ -37,6 +76,7 @@ var AW = document.getElementById("AW");
 
 var dataTable = {
 
+//	 0 FL	1CR	2CH	3HC	4CC	5AC	6BW	7bra	8bra	8bra	9liv	10liv	11liv	12lun	13lun	14lu	15ht	16ht	17ht	18thy	19thym	20thym	21sple	22sple	23spl	24kid	24kd	25kd	26ad	27ad	28ad
 M12:	[9,	7.4,	9.8,	7.1,	NaN,	NaN,	29.6,	4.8,	4.8,	4.8,	1.5,	1.4,	1.3,	0.6,	0.9,	0.9,	0.1,	0.1,	0.1,	0.03,	NaN,	NaN,	0.01,	NaN,	NaN,	0.25,	0.19,	0.19,	0.04,	0.11,	0.11],
 SD12:	[3,	1.1,	1.7,	1.1,	NaN,	NaN,	14.9,	1.4,	1.4,	1.4,	1.2,	1.2,	1.2,	0.9,	0.9,	0.9,	0.14,	0.14,	0.14,	0.06,	NaN,	NaN,	0.02,	NaN,	NaN,	0.15,	0.15,	0.15,	0.18,	0.18,	0.18],
 M13:	[12,	8.7,	11.8,	8.5,	NaN,	NaN,	37.4,	6.5,	6.5,	6.5,	2,	1.7,	1.7,	1.2,	1.2,	1.2,	0.2,	0.2,	0.2,	0.04,	NaN,	NaN,	0.02,	0.08,	0.08,	0.3,	0.2,	0.2,	0.17,	0.17,	0.17],
@@ -107,40 +147,69 @@ SD43:	[5,	2,	2.5,	2,	2.8,	NaN,	551,	45,	45,	45,	42,	42,	42,	21.9,	21.9,	21.9,	4.
 //alert (dataTable.meanGA[0]);
 
 
-submit.onclick = function(){useGA()};
+submit.onclick = function(){resetUse()};
+//resetUse()
+
+//use det takes input to use and will need to have index in table. After found, go to output function
+
+
+
 
 var alertme = function () {
     
-    //alert (parseInt(FL.value) + 2);
-  if (parseInt(FL.value) >= dataTable.M12[0]){
-        stringer = "Your foot length is large"; 
-     
-    }
-    else {stringer = "Little foot"}
-    alert(stringer);
+alert (useDet);
+//alert(detEntry);   
+
+
 }
 
-var useGA = function () {
-//first convert input in terms of table ... add an M and search
 
+
+
+
+var useGA = function (GA) {
+
+//first convert input in terms of table ... add an M and search
+//alert(detEntry);
 //ex: GA 35 so use M35 values, if out of range because larger, then use ++ and add M
 
 //initially assume using foot length
 
-//debating on global for current mean or limit scope
+//debating on global for current mean or limit scope; make sure body weight entry too
 
+	if (FL.value != null)
+	{
+//change to global gaM and gaSD
 
-var gaM = "M" + gestationalAge;
-var gaSD = "SD" + gestationalAge;
-var rangeMeas = calcTwoSD(gaM, gaSD);
-//alert (rangeMeas[0]);
-detInRange (rangeMeas);
-//alert (dataTable[gaSD][0]);
+		gaM = "M" + GA;
+		gaSD = "SD" + GA;
+//.value;
+
+//alert (GA);
+if (iterations > 43) { stop()};
+		
+
+	if(iterations === 0) {
+		// store my initial guess at GA
+				
+		expectedRange = [dataTable[gaM], dataTable[gaSD]];
+		rangeMeas = calcTwoSD (gaM, gaSD);
+		detInRange (rangeMeas);
+		}
+	else {
+
+		rangeMeas = calcTwoSD(gaM, gaSD);
+		detInRange (rangeMeas);
+		}
+	}
+
 }
 
-var calcTwoSD = function (gaM, gaSD) {
+var calcTwoSD = function (gaM, gaSD, index) {
+
 //alert(dataTable[gaSD][0]);
 //below is trouble line... can't subtract????
+//will need to rewrite to take in current location...
 
 var mini = dataTable[gaM][0] - dataTable[gaSD][0] * 2;
 var maxi = dataTable[gaM][0] + dataTable[gaSD][0] * 2; 
@@ -148,20 +217,100 @@ var maxi = dataTable[gaM][0] + dataTable[gaSD][0] * 2;
 return [mini, maxi];
 }
 
+
 var detInRange = function (rangeMeas) {
-	if (parseInt(FL.value) > rangeMeas[1]){
-		alert("Greater than GA");	
+//choose either FL or body weight with an additional variable...
+//will add each time to GA until found, call useGA each time.
+//alert(detEntry);
+
+	if (detEntry > rangeMeas[1]){
+		alert("Greater than GA");
+			GAA++;
+		useGA(GAA)
 		}	
-	else if (parseInt(FL.value) < rangeMeas[0]){		
+	else if (detEntry < rangeMeas[0]){		
 		alert("Smaller than GA");
+		GAA--;
+		useGA(GAA);
 	}	
 	else {		
 		alert("Just Right");
+		alert(parseInt(GAA));
+		
+		if (iterations > 0){
+		correctedRange = [dataTable[gaM], dataTable[gaSD]];
+
+		}
 	}
+iterations++;
+
 }
 
 
 
+var resetUse = function () {
+	if(detAge === "Foot Length"){
+
+	useDet = 0;
+	detEntry = FL.value;
+
+	}
+	else {
+	useDet = 6;
+	detEntry = parseInt(bodyWeight.value);
+	}
+	GAA = GA.value;
+//alert(detEntry);
+	iterations = 0;
+	useGA(GA.value);
+	document.getElementById('report-output').style.display = 'block';
+	
+	generate_report();
+}
+
+var stop = function () { };
+
+
+generate_report = function () {
+     // This function joins the output from each section's own generating
+     // function as text and puts that text into the designated textarea.
+     // I will define a generic sentence and append each line with unit and (expected range = x)
+
+        //if ($('#report-output:visible').length === 0) {
+         // If the textarea is hidden, we don't need to generate the report.
+         //   return;
+        //}
+	
+	$('#report-output').text("The expected measurements for:" + " " + GA.value +" "+ "weeks");
+        //will use ex: body weight = 4000 (expected range for GA is 3000 - 3500 grams)
+    };
 
 
 
+ $(document.body).keyup(function (evt) {
+//alert("help");        
+ // This function adds hotkeys so that the user doesn't have to scroll
+         // all the way to the top and click the button in order to inspect a
+         // freshly generated report. I will add support for touch gestures in
+         // the near future when I can obtain a tablet to test with.
+            if ((evt.which === 13) && ($('textarea:visible').length === 0)) {
+             // The user pressed "Enter".
+                //evt.preventDefault();
+                //$('#generate-report').click();
+            } 
+		else if (evt.which === 27) {
+             // The user pressed "Escape".
+		document.getElementById('report-output').style.display = 'none';
+                //it reaches here but doesn't close display!!!
+               
+            }
+            return
+ });
+
+
+
+var generate_expected = function () {
+
+
+
+}
