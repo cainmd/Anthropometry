@@ -19,8 +19,8 @@ head h1,h2,h3{
 
 body{
 
-//background-image:url('bodyBackground.jpg');
-background-color: DarkSlateBlue;
+background-image:url('bodyBackground.jpg');
+
 background-size: 100% auto;
 
 
@@ -49,7 +49,7 @@ left;
 .button, button{
    
  text-align: right;
-}
+
 
 .clear { clear: both; height: 0; line-height: 0; }
 .floatright { float: right; }
@@ -81,10 +81,12 @@ input {
  */
     font-size: xx-large;
     display: none;
-    height: 62%;
+    height: 82%;
     left: 19%;
     padding: 1ex;
     position: fixed;
-    top: 19%;
+    top: 10%;
     width: 62%;
+    z-index: 1;
+    
 }
