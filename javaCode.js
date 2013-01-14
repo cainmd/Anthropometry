@@ -160,7 +160,7 @@ SD43:	[5,	2,	2.5,	2,	1.4,	NaN,	551,	45,	45,	45,	42,	42,	42,	21.9,	21.9,	21.9,	4.
 //alert (dataTable.meanGA[0]);
 
 
-submit.onclick = function(){useGA ()};
+submit.onclick = function(){resetUse ()};
 //resetUse()
 
 //use det takes input to use and will need to have index in table. After found, go to output function
@@ -239,21 +239,23 @@ var detInRange = function (rangeMeas) {
 //alert(detEntry);
 
 	if (detEntry > rangeMeas[1]){
-		//alert("Greater than GA");
+		alert("Greater than GA");
 			GAA++;
 		useGA(GAA)
 		}	
 	else if (detEntry < rangeMeas[0]){		
-		//alert("Smaller than GA");
+		alert("Smaller than GA");
 		GAA--;
 		useGA(GAA);
 	}	
 	else {		
 	    
 		if (iterations > 0){
+            alert (iterations)
 		correctedRange = [dataTable[gaM], dataTable[gaSD]];
         
 		}
+        correctedRange = [dataTable[gaM], dataTable[gaSD]];
         generate_report();
 	}
 iterations++;
@@ -280,9 +282,9 @@ var resetUse = function () {
 	
 	checkValues();
 
-	useGA(GA.value);
+	useGA(GAA);
 	
-    //document.getElementById('report-output').style.display = 'block';
+    document.getElementById('report-output').style.display = 'block';
 	
 	
 }
@@ -336,8 +338,9 @@ var stop = function () { };
      //   return;
      //}
      generate_expected();
-
-     generate_corrected();
+     if (GAA != GA.value) {
+         generate_corrected();
+     }
      $('#report-output').text("The expected measurements for:" + " " + GA.value + " " + "weeks" + "\r\n" + textString);
      //will use ex: body weight = 4000 (expected range for GA is 3000 - 3500 grams)
 
@@ -347,12 +350,15 @@ var stop = function () { };
  var generate_expected = function () {
      //alert(expectedRange[0].length)
      //alert (expectedRange[0].length);
+     
      trimmedExpected = trimmer(expectedRange[0]);
+     
      trimmedExpectedSD = trimmer(expectedRange[1]);
+     
      for (var i = 0; i < labels.length; i++) {
          //store new range for actual values and text	
          //trimmedExpected, trimmedCorrected
-         alert(trimmedExpected[i]);
+         //alert(trimmedExpected[i]);
 
          // alert(trimmedExpected.length + " " + labels.length )
          
@@ -368,10 +374,12 @@ var stop = function () { };
       var generate_corrected = function () {
          //alert(expectedRange[0].length)
          //alert (expectedRange[0].length);
+         alert("before correct")
          trimmedCorrected = trimmer(correctedRange[0]);
+         alert("after")
          trimmedCorrectedSD = trimmer(correctedRange[1]);
-         alert(GAA)
-         textString = textString + "\r\n" + "The expected measurements for :" + " " + GAA + "weeks"
+         
+         textString = textString + "\r\n" + "\r\n" + "The expected measurements for :" + " " + GAA + "weeks" +"\r\n"
          for (var i = 0; i < labels.length; i++) {
              //store new range for actual values and text	
              //trimmedExpected, trimmedCorrected
