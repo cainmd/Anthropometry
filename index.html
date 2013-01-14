@@ -1,16 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>My Site's Title</title>
-        
+        <title>Anthropometry</title>
+        <link rel="stylesheet" type="text/css" href="layout.css">
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
     <body>
         <div class="container">
   <h3>
-    Heading
+    Gestational Age Anthropometry
   </h3>
  <div class="control-group">
 </div>
@@ -18,114 +18,108 @@
 </div>
 <div class="control-group">
 </div>
-<form>
+<table>
+<tr>
+    <td>
+<form name = "form1" id="form_1">
 
-<div class="control-group">
-  <label for="textinput1">
-    Foot Length
-  </label>
-  <input id="flInput" name="textinput1" type="number">
-</div>
-<div class="control-group">
-  //<label for="textinput2">
-    //Crown Rump
- // </label>
-  <input id="crInput" name="textinput2" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput3">
-    Crown Heel
-  </label>
-  <input id="chInput" name="textinput3" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput5">
-    Head Circumference
-  </label>
-  <input id="hcInput" name="textinput5" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput6">
-    Chest Circumference
-  </label>
-  <input id="ccInput" name="textinput6" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput8">
-    Abdominal Circumference
-  </label>
-  <input id="acInput" name="textinput8" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput8">
-    Body Weight 
-  </label>
-  <input id="bodyweightInput" name="textinput8" type="number">
+Gestational Age: <input type="number" name="Gestational Age" id ="GA" value=" ">
+
+<div>
+Foot Length: <input type="number" name="Foot Length" id ="FL" value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Brain Weight
-  </label>
-  <input id="brainweightInput" name="textinput8" type="number">
+<div>
+Crown Rump: <input type="number" name="Crown Rump" id="CR" value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Liver Circumference
-  </label>
-  <input id="liverweightInput" name="textinput8" type="number">
-</div>
-<div class="control-group">
-  <label for="textinput8">
-    Lung Weight
-  </label>
-  <input id="lungweightInput" name="textinput8" type="number">
+<div>
+Crown Heel: <input type="number" name="Crown Heel" id="CH" value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Heart Circumference
-  </label>
-  <input id="heartweightInput" name="textinput8" type="number">
+<div>
+Head Circumference: <input type="number" name="Head Circumference" id="HC"  value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Thymus Weight
-  </label>
-  <input id="thymusweightInput" name="textinput8" type="number">
+<div>
+Chest Circumference: <input type="number" name="Chest Circumference" id="CC" value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Spleen Weight
-  </label>
-  <input id="spleenweightInput" name="textinput8" type="number">
+<div>
+Abdominal Circumference: <input type="number" name="Abdominal Circumference" id="AC"  value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Kidney Circumference
-  </label>
-  <input id="kidneyweightInput" name="textinput8" type="number">
+<div>
+Body Weight: <input type="number" name="Body Weight" id="bodyWeight"  value=" ">
 </div>
 
-<div class="control-group">
-  <label for="textinput8">
-    Adrenal Circumference
-  </label>
-  <input id="adrenalweightInput" name="textinput8" type="number">
+<div>
+Brain Weight: <input type="number" name="Brain Weight" id="BW"  value=" ">
 </div>
 
-    <br></br>
-<a id="confirm" class="btn" type = "submit" href="#">
-  Confirm
-</a>
-
+<div>
+Liver Weight: <input type="number" name="Liver Weight" id="LVW" value=" ">
 </div>
-        <script type="text/javascript" src="javaCode.js"></script>
-    </body>
+
+<div>
+Lung Weight: <input type="number" name="Lung Weight" id="LUW"  value=" ">
+</div>
+
+<div>
+Heart Weight: <input type="number" name="Hear Weight" id="HW" value=" ">
+</div>
+
+<div>
+Thymus Weight: <input type="number" name="Thymus Weight" id="TW" value=" ">
+</div>
+
+<div>
+Spleen Weight: <input type="number" name="Spleen Weight" id="SW" value=" ">
+</div>
+
+<div>
+Kidneys Weight: <input type="number" name="Kidneys Weight" id="KW" value=" ">
+</div>
+
+<div>
+Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW" value=" ">
+</div>
+    
 </form>
+</td>
+   <td valign="top">
+   
+    <form id="form 2">
+    Choose evaluation type: <select name="evaltype" id = "detAge">
+   
+    <option value="Foot Length">Foot Length</option>
+    <option value="Body Weight">Body Weight</option>
+    
+    </select>
+    <div>  
+    Degree of Maceration: <select name="evaltype" id = "maceration">
+    
+    <option value="None to mild">None to mild</option>
+    <option value="Moderate">Moderate</option>
+    <option value="Severe">Severe</option>
+    
+    </select>
+     </div>
+ </form> 
+    </td>
+  </tr>
+</table>
+ <br></br>
+ <input type="button" value="Submit" id ="submit" >
 
+<div>
+<textarea class="popup" id="report-output"></textarea>
+</div>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="javaCode.js"></script>
+</div>  
+ </body>
+     
+    
 </html>
