@@ -19,8 +19,8 @@ head h1,h2,h3{
 
 body{
 
-background-image:url('bodyBackground.jpg');
-
+//background-image:url('bodyBackground.jpg');
+background-color: "green"
 background-size: 100% auto;
 
 
@@ -79,6 +79,7 @@ input {
  /*
     This class is used for the lightbox effect.
  */
+    font-size: xx-large;
     display: none;
     height: 62%;
     left: 19%;
