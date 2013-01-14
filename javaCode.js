@@ -251,7 +251,7 @@ var detInRange = function (rangeMeas) {
 	else {		
 	    
 		if (iterations > 0){
-            alert (iterations)
+            //alert (iterations)
 		correctedRange = [dataTable[gaM], dataTable[gaSD]];
         
 		}
@@ -374,9 +374,9 @@ var stop = function () { };
       var generate_corrected = function () {
          //alert(expectedRange[0].length)
          //alert (expectedRange[0].length);
-         alert("before correct")
+         //alert("before correct")
          trimmedCorrected = trimmer(correctedRange[0]);
-         alert("after")
+         //alert("after")
          trimmedCorrectedSD = trimmer(correctedRange[1]);
          
          textString = textString + "\r\n" + "\r\n" + "The expected measurements for :" + " " + GAA + "weeks" +"\r\n"
