@@ -1,6 +1,9 @@
 //Notes: need to div CC and AC SD by 2! Different paper. Done for this but not in excel
 //Can check values too
    
+
+
+
 if (window.hasOwnProperty('jQuery') === false) {
      // NOTE: It also needs to be version 1.7.2. I have had trouble getting it
      // to work with "newer" versions of jQuery, and I'm not sure why yet ...
@@ -10,9 +13,9 @@ if (window.hasOwnProperty('jQuery') === false) {
  // Declarations
 
 
-
+ 
  // Definitions
-
+    
 var $ = window.jQuery;
 
 //used to determine values in maceration columns
@@ -250,12 +253,12 @@ var detInRange = function (rangeMeas) {
 //alert(detEntry);
 
 	if (detEntry > rangeMeas[1]){
-		alert("Greater than GA");
+		//alert("Greater than GA");
 			GAA++;
 		useGA(GAA)
 		}	
 	else if (detEntry < rangeMeas[0]){		
-		alert("Smaller than GA");
+		//alert("Smaller than GA");
 		GAA--;
 		useGA(GAA);
 	}	
@@ -298,6 +301,7 @@ var resetUse = function () {
         useGA(GAA);
 
         document.getElementById('report-output').style.display = 'block';
+
     }
 
     if (FL.value === "" || bodyWeight === "") {
@@ -361,29 +365,31 @@ var stop = function () { };
      }
      $('#report-output').text("The expected measurements for:" + " " + GA.value + " " + "weeks" + "\r\n" + textString);
      //will use ex: body weight = 4000 (expected range for GA is 3000 - 3500 grams)
-
+     //drawTable();
+     drawVisualization();
  };
 
 
  var generate_expected = function () {
-  
-     
+
+
      trimmedExpected = trimmer(expectedRange[0]);
-     
+
      trimmedExpectedSD = trimmer(expectedRange[1]);
-     
+
      for (var i = 0; i < labels.length; i++) {
          //store new range for actual values and text	
          //trimmedExpected, trimmedCorrected
          //alert(trimmedExpected[i]);
 
          // alert(trimmedExpected.length + " " + labels.length )
-         
+
          //$('#report-output').(expectedRange[0][i]);
          // \n for new paragraph and append
          //currentRange = calcTwoSD("M" + GA.value, "SD" + GA.value, i);
          textString = textString + "\r\n" + labels[i] + " " + actualRange[i] + " " + "(Mean:" + " " + trimmedExpected[i] + " with 95% range of" + " " + Math.round([trimmedExpected[i] - trimmedExpectedSD[i] * 2] * 10) / 10 + " - " + Math.round([trimmedExpected[i] + trimmedExpectedSD[i] * 2] * 10) / 10 + ")";
-
+         
+         
      }
 
  }
@@ -396,7 +402,7 @@ var stop = function () { };
         
          trimmedCorrectedSD = trimmer(correctedRange[1]);
          
-         textString = textString + "\r\n" + "\r\n" + "The expected measurements for :" + " " + GAA + "weeks" +"\r\n"
+         textString = textString + "\r\n" + "\r\n" + "The corrected measurements for :" + " " + GAA + " " + "weeks" +"\r\n"
          for (var i = 0; i < labels.length; i++) {
              //store new range for actual values and text	
              //trimmedExpected, trimmedCorrected
@@ -450,4 +456,54 @@ var stop = function () { };
          return trimmedReturn;
 
      }
+
+
+function drawVisualization() {
+  // Create and populate the data table.
+ //need to add if no corrected is available
+    var stopNumber = 0;
+var data = new google.visualization.DataTable();
+data.addColumn('string','Measurements')
+var myLabels = ['Actual values', 'Expected Means' + " " + GA.value + " weeks", 'SD', 'Min', 'Max', 'Corrected Means' + " " + GAA + " weeks", 'SD', 'Min', 'Max'];
+
+if (GAA == GA.value) {
+    stopNumber = 4;
+}
+for (var i = 0; i < myLabels.length - stopNumber; i++) {
+    data.addColumn('number', myLabels[i]);
+    
+};
+
+ console.log(data);        
+
+var additionalData = convertTable();
+alert(additionalData[0].length )
+for (var j = 0; j < labels.length; j++) {
+    data.addRow(additionalData[j]);
+};
+console.log(data);
+  // Create and draw the visualization.
+  visualization = new google.visualization.Table(document.getElementById('table'));
+  visualization.draw(data, null);
+}
+
+function convertTable(){
+    var convertedTable = [];
+    
+    if (GAA == GA.value){
+        for (var i = 0; i < labels.length ; i++){
+        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i] ]
+                
  
+        }
+
+    }
+    else {
+        for (var i = 0; i < labels.length; i++) {
+            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i], parseFloat(trimmedCorrected[i]),
+        parseFloat(trimmedCorrectedSD[i]), parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD * 2, parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]
+        }
+ 
+    }
+    return convertedTable;
+}
