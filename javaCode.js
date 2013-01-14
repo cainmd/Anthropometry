@@ -239,12 +239,12 @@ var detInRange = function (rangeMeas) {
 //alert(detEntry);
 
 	if (detEntry > rangeMeas[1]){
-		alert("Greater than GA");
+		//alert("Greater than GA");
 			GAA++;
 		useGA(GAA)
 		}	
 	else if (detEntry < rangeMeas[0]){		
-		alert("Smaller than GA");
+		//alert("Smaller than GA");
 		GAA--;
 		useGA(GAA);
 	}	
