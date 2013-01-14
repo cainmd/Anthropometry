@@ -474,10 +474,10 @@ for (var i = 0; i < myLabels.length - stopNumber; i++) {
     
 };
 
- console.log(data);        
+       
 
 var additionalData = convertTable();
-alert(additionalData[0].length )
+
 for (var j = 0; j < labels.length; j++) {
     data.addRow(additionalData[j]);
 };
