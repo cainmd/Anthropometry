@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+ <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['table']});
+    </script>
 <html lang="en">
+
     <head>
         <meta charset="utf-8" />
         <title>Anthropometry</title>
         <link rel="stylesheet" type="text/css" href="layout.css">
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
+
     <body>
         <div class="container">
   <h3>
@@ -115,10 +120,15 @@ Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW" value=" ">
 <div>
 <textarea class="popup" id="report-output"></textarea>
 </div>
+           
+<div id="table"></div>
 
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="javaCode.js"></script>
+
+   
 </div>  
+
  </body>
      
     
