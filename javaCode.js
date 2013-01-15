@@ -522,7 +522,7 @@ function convertTable(){
     
     if (GAA == GA.value){
         for (var i = 0; i < labels.length ; i++){
-        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i] ]
+        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10,  Math.round([parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10/10) ]
                 
  
         }
@@ -530,8 +530,8 @@ function convertTable(){
     }
     else {
         for (var i = 0; i < labels.length; i++) {
-            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i], parseFloat(trimmedCorrected[i]),
-        parseFloat(trimmedCorrectedSD[i]), parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2, parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]
+            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, Math.round([parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedCorrected[i]),
+        parseFloat(trimmedCorrectedSD[i]),  Math.round([ parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2]*10)/10,  Math.round([parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]*10)/10]
         }
  
     }
