@@ -458,10 +458,29 @@ var stop = function () { };
      }
 
 
+
+
+
+
 function drawVisualization() {
   // Create and populate the data table.
  //need to add if no corrected is available
-    var stopNumber = 0;
+
+   var cssClassNames = {
+    'headerRow': 'bold-darkblue-font large-font bold-font',
+    'tableColumn': 'small-width',
+    'tableRow': 'left-text',
+    'oddTableRow': 'beige-background',
+    'selectedTableRow': 'orange-background large-font',
+    'hoverTableRow': '',
+    'headerCell': 'gold-border',
+    'tableCell': 'left-text',
+    'rowNumberCell': 'underline-blue-font'};
+
+     var options = {'showRowNumber': false, 'allowHtml': true, 'cssClassNames': cssClassNames, 'width':'70%'}
+
+
+var stopNumber = 0;
 var data = new google.visualization.DataTable();
 data.addColumn('string','Measurements')
 var myLabels = ['Actual values', 'Expected Means' + " " + GA.value + " weeks", 'SD', 'Min', 'Max', 'Corrected Means' + " " + GAA + " weeks", 'SD', 'Min', 'Max'];
@@ -471,20 +490,31 @@ if (GAA == GA.value) {
 }
 for (var i = 0; i < myLabels.length - stopNumber; i++) {
     data.addColumn('number', myLabels[i]);
-    
+    //data.setCell(0, i, true, {'style': 'background-color: red;'});
 };
 
-       
+  
 
 var additionalData = convertTable();
-
+//alert(additionalData[0].length )
 for (var j = 0; j < labels.length; j++) {
     data.addRow(additionalData[j]);
+   // data.setCell(i, 1, {'className': 'bold-font'});
+    //data.setRowProperties(j, {'style' : 'italic-purple-font large-font'} );
+    if (actualRange[j] > trimmedExpected[j] + 2 * trimmedExpectedSD[j] || actualRange[j] < trimmedExpected[j] - 2 * trimmedExpectedSD[j]){
+        
+        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'red-border left-text'});
+    }
+    //setRowProperty(rowIndex, name, value)
 };
-console.log(data);
+//data.setColumn(1,'className':'left-text')
+
   // Create and draw the visualization.
   visualization = new google.visualization.Table(document.getElementById('table'));
-  visualization.draw(data, null);
+  visualization.draw(data, options);
+  
+
+
 }
 
 function convertTable(){
@@ -501,7 +531,7 @@ function convertTable(){
     else {
         for (var i = 0; i < labels.length; i++) {
             convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i], parseFloat(trimmedCorrected[i]),
-        parseFloat(trimmedCorrectedSD[i]), parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD * 2, parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]
+        parseFloat(trimmedCorrectedSD[i]), parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2, parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]
         }
  
     }
