@@ -1,6 +1,9 @@
 //Notes: need to div CC and AC SD by 2! Different paper. Done for this but not in excel
 //Can check values too
    
+
+
+
 if (window.hasOwnProperty('jQuery') === false) {
      // NOTE: It also needs to be version 1.7.2. I have had trouble getting it
      // to work with "newer" versions of jQuery, and I'm not sure why yet ...
@@ -10,9 +13,9 @@ if (window.hasOwnProperty('jQuery') === false) {
  // Declarations
 
 
-
+ 
  // Definitions
-
+    
 var $ = window.jQuery;
 
 //used to determine values in maceration columns
@@ -65,11 +68,20 @@ var KW = document.getElementById("KW");
 var AW = document.getElementById("AW");
 
 
-var s = document.getElementById('detAge');
-var detAge = s.options[s.selectedIndex].value;
+var detA = document.getElementById('detAge');
 
-var t = document.getElementById('maceration');
-var maceration = t.options[t.selectedIndex].value;
+
+//var t = document.getElementById("maceration");
+//var maceration = document.getElementById("maceration").options[t].value;
+
+//var maceration = document.getElementById('maceration').selectedIndex;
+
+
+//t.options[t.selectedIndex].value;
+
+var mac = document.getElementById("maceration");
+//alert("Index: " + y[x].index + " is " + y[x].text);
+
 
 var labels = ["Foot Length (mm)", "Crown Rump Length (cm)", "Crown Heel Length (cm)", "Head Circumference (cm)", "Chest Circumference (cm)", "Abdominal Circumference (cm)", "Body Weight (g)", "Brain Weight (g)", 
 "Liver Weight (g)", "Lung Weight (g)", "Heart Weight (g)", "Thymus Weight (g)", "Spleen Weight (g)", "Kidney Weight (g)", "Adrenal Weight (g)"];
@@ -79,7 +91,7 @@ var actualRange;
 
 
 //var dataTable = {
-//'12': [12,   9,    7.4,    9.8,    7.1,    NaN,    NaN,	29.6,	4.8,	4.8,	4.8,	1.5,	1.4,	1.3,	0.6,	0.9,	0.9,	0.1,	0.1,	0.1,	0.03,	NaN,	NaN,	0.01,	NaN,	NaN,	0.25,	0.19,	0.19,	0.04,	0.11,	0.11],
+//'12': [12,   9,    7.4,    9.8,    7.1,    NaN,	NaN,	29.6,	4.8,	4.8,	4.8,	1.5,	1.4,	1.3,	0.6,	0.9,	0.9,	0.1,	0.1,	0.1,	0.03,	NaN,	NaN,	0.01,	NaN,	NaN,	0.25,	0.19,	0.19,	0.04,	0.11,	0.11],
 
 //'12SD': [3,	1.1,	1.7,	1.1,	NaN,	NaN,	14.9,	1.4,	1.4,	1.4,	1.2,	1.2,	1.2,	0.9,	0.9,	0.9,	0.14,	0.14,	0.14,	0.06,	NaN,	NaN,	0.02,	NaN,	NaN,	0.15,	0.15,	0.15,	0.18,	0.18,	0.18]
 //}
@@ -160,8 +172,10 @@ SD43:	[5,	2,	2.5,	2,	1.4,	NaN,	551,	45,	45,	45,	42,	42,	42,	21.9,	21.9,	21.9,	4.
 //alert (dataTable.meanGA[0]);
 
 
-submit.onclick = function(){useGA ()};
+submit.onclick = function(){resetUse ()};
 //resetUse()
+
+//var y=document.getElementById("maceration").options;
 
 //use det takes input to use and will need to have index in table. After found, go to output function
 
@@ -208,12 +222,12 @@ var useGA = function (valGA) {
             //for (var i = 0; i < 4; i++) { alert(actualRange[i]) };
             //alert(GA.value)
             expectedRange = [dataTable["M"+ GA.value], dataTable["SD" + GA.value]];
-            rangeMeas = calcTwoSD(gaM, gaSD, 0);
+            rangeMeas = calcTwoSD(gaM, gaSD, useDet);
             detInRange(rangeMeas);
         }
         else {
-
-            rangeMeas = calcTwoSD(gaM, gaSD, 0);
+            //changed 0 to useDet
+            rangeMeas = calcTwoSD(gaM, gaSD, useDet);
             detInRange(rangeMeas);
         }
     }
@@ -251,9 +265,11 @@ var detInRange = function (rangeMeas) {
 	else {		
 	    
 		if (iterations > 0){
+            alert (iterations)
 		correctedRange = [dataTable[gaM], dataTable[gaSD]];
         
 		}
+        correctedRange = [dataTable[gaM], dataTable[gaSD]];
         generate_report();
 	}
 iterations++;
@@ -263,28 +279,36 @@ iterations++;
 
 
 var resetUse = function () {
-	if(detAge === "Foot Length"){
+    var detAge = detA.options[detA.selectedIndex].value;
+    if (FL.value != "" && bodyWeight != "") {
+        if (detAge === "Foot Length") {
 
-	useDet = 0;
-	detEntry = FL.value;
+            useDet = 0;
+            detEntry = FL.value;
 
-	}
-	else {
-	useDet = 6;
-	detEntry = parseInt(bodyWeight.value);
-	}
-	GAA = GA.value;
+        }
+        else {
+            useDet = 6;
+            detEntry = parseInt(bodyWeight.value);
+        }
+        GAA = GA.value;
 
-	iterations = 0;
-//stop evil negatives!!
-	
-	checkValues();
+        iterations = 0;
+        //stop evil negatives!!
 
-	useGA(GA.value);
-	
-    //document.getElementById('report-output').style.display = 'block';
-	
-	
+        checkValues();
+
+        useGA(GAA);
+
+        document.getElementById('report-output').style.display = 'block';
+
+    }
+
+    if (FL.value === "" || bodyWeight === "") {
+        alert("You need to enter a foot length and a body weight");
+    }
+
+
 }
 
 var stop = function () { };
@@ -292,7 +316,7 @@ var stop = function () { };
 
 
  $(document.body).keyup(function (evt) {
-//alert("help");        
+       
  // This function adds hotkeys so that the user doesn't have to scroll
          // all the way to the top and click the button in order to inspect a
          // freshly generated report. I will add support for touch gestures in
@@ -322,7 +346,7 @@ var stop = function () { };
          //if (actualRange[i] === undefined  || actualRange[i] <= 0) {
            //actualRange[i] = "No Entry";
          //}
-        // alert(actualRange[i]);
+       
      }
  }
 
@@ -336,31 +360,36 @@ var stop = function () { };
      //   return;
      //}
      generate_expected();
-
-     generate_corrected();
+     if (GAA != GA.value) {
+         generate_corrected();
+     }
      $('#report-output').text("The expected measurements for:" + " " + GA.value + " " + "weeks" + "\r\n" + textString);
      //will use ex: body weight = 4000 (expected range for GA is 3000 - 3500 grams)
-
+     //drawTable();
+     drawVisualization();
  };
 
 
  var generate_expected = function () {
-     //alert(expectedRange[0].length)
-     //alert (expectedRange[0].length);
+
+
      trimmedExpected = trimmer(expectedRange[0]);
+
      trimmedExpectedSD = trimmer(expectedRange[1]);
+
      for (var i = 0; i < labels.length; i++) {
          //store new range for actual values and text	
          //trimmedExpected, trimmedCorrected
-         alert(trimmedExpected[i]);
+         //alert(trimmedExpected[i]);
 
          // alert(trimmedExpected.length + " " + labels.length )
-         
+
          //$('#report-output').(expectedRange[0][i]);
          // \n for new paragraph and append
          //currentRange = calcTwoSD("M" + GA.value, "SD" + GA.value, i);
          textString = textString + "\r\n" + labels[i] + " " + actualRange[i] + " " + "(Mean:" + " " + trimmedExpected[i] + " with 95% range of" + " " + Math.round([trimmedExpected[i] - trimmedExpectedSD[i] * 2] * 10) / 10 + " - " + Math.round([trimmedExpected[i] + trimmedExpectedSD[i] * 2] * 10) / 10 + ")";
-
+         
+         
      }
 
  }
@@ -368,16 +397,16 @@ var stop = function () { };
       var generate_corrected = function () {
          //alert(expectedRange[0].length)
          //alert (expectedRange[0].length);
+         
          trimmedCorrected = trimmer(correctedRange[0]);
+        
          trimmedCorrectedSD = trimmer(correctedRange[1]);
-         alert(GAA)
-         textString = textString + "\r\n" + "The expected measurements for :" + " " + GAA + "weeks"
+         
+         textString = textString + "\r\n" + "\r\n" + "The corrected measurements for :" + " " + GAA + " " + "weeks" +"\r\n"
          for (var i = 0; i < labels.length; i++) {
              //store new range for actual values and text	
              //trimmedExpected, trimmedCorrected
 
-             //alert(trimmedCorrected.length + " " + labels.length )
-             //alert(trimmedExpected[i]);
              //$('#report-output').(expectedRange[0][i]);
              // \n for new paragraph and append
              //currentRange = calcTwoSD("M" + GA.value, "SD" + GA.value, i);
@@ -387,7 +416,8 @@ var stop = function () { };
 
      }
      var trimmer = function (longArray) {
-         //alert(maceration)
+         var maceration = mac.options[mac.selectedIndex].value;
+         
          var count = 0;
          var trimmedReturn = [];
          var step = 1;
@@ -401,12 +431,13 @@ var stop = function () { };
              else if (i == 7) {
                  step = 3
 
-                 if (maceration == "None to mild") {
+                 if (maceration === "None to mild") {
                      trimmedReturn[count] = longArray[i];
 
                  }
                  else if (maceration == "Moderate") {
                      i = i + 1;
+                     
                      trimmedReturn[count] = longArray[i];
                  }
                  else {
@@ -425,4 +456,84 @@ var stop = function () { };
          return trimmedReturn;
 
      }
+
+
+
+
+
+
+function drawVisualization() {
+  // Create and populate the data table.
+ //need to add if no corrected is available
+
+   var cssClassNames = {
+    'headerRow': 'bold-darkblue-font large-font bold-font',
+    'tableColumn': 'small-width',
+    'tableRow': 'left-text',
+    'oddTableRow': 'beige-background',
+    'selectedTableRow': 'orange-background large-font',
+    'hoverTableRow': '',
+    'headerCell': 'gold-border',
+    'tableCell': 'left-text',
+    'rowNumberCell': 'underline-blue-font'};
+
+     var options = {'showRowNumber': false, 'allowHtml': true, 'cssClassNames': cssClassNames, 'width':'70%'}
+
+
+var stopNumber = 0;
+var data = new google.visualization.DataTable();
+data.addColumn('string','Measurements')
+var myLabels = ['Actual values', 'Expected Means' + " " + GA.value + " weeks", 'SD', 'Min', 'Max', 'Corrected Means' + " " + GAA + " weeks", 'SD', 'Min', 'Max'];
+
+if (GAA == GA.value) {
+    stopNumber = 4;
+}
+for (var i = 0; i < myLabels.length - stopNumber; i++) {
+    data.addColumn('number', myLabels[i]);
+    //data.setCell(0, i, true, {'style': 'background-color: red;'});
+};
+
+  
+
+var additionalData = convertTable();
+//alert(additionalData[0].length )
+for (var j = 0; j < labels.length; j++) {
+    data.addRow(additionalData[j]);
+   // data.setCell(i, 1, {'className': 'bold-font'});
+    //data.setRowProperties(j, {'style' : 'italic-purple-font large-font'} );
+    if (actualRange[j] > trimmedExpected[j] + 2 * trimmedExpectedSD[j] || actualRange[j] < trimmedExpected[j] - 2 * trimmedExpectedSD[j]){
+        
+        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'red-border left-text'});
+    }
+    //setRowProperty(rowIndex, name, value)
+};
+//data.setColumn(1,'className':'left-text')
+
+  // Create and draw the visualization.
+  visualization = new google.visualization.Table(document.getElementById('table'));
+  visualization.draw(data, options);
+  
+
+
+}
+
+function convertTable(){
+    var convertedTable = [];
+    
+    if (GAA == GA.value){
+        for (var i = 0; i < labels.length ; i++){
+        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i] ]
+                
  
+        }
+
+    }
+    else {
+        for (var i = 0; i < labels.length; i++) {
+            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i], parseFloat(trimmedCorrected[i]),
+        parseFloat(trimmedCorrectedSD[i]), parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2, parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]
+        }
+ 
+    }
+    return convertedTable;
+}
