@@ -204,7 +204,7 @@ var useGA = function (valGA) {
 
     //debating on global for current mean or limit scope; make sure body weight entry too
     //will need to include body weight...
-    if (parseInt(bodyWeight.value) > 0 && parseInt(FL.value) > 0) {
+    if (parseInt(bodyWeight.value) > 0 || parseInt(FL.value) > 0) {
         //change to global gaM and gaSD
 
         gaM = "M" + valGA;
@@ -248,31 +248,34 @@ return [mini, maxi];
 
 
 var detInRange = function (rangeMeas) {
-//choose either FL or body weight with an additional variable...
-//will add each time to GA until found, call useGA each time.
-//alert(detEntry);
+    //choose either FL or body weight with an additional variable...
+    //will add each time to GA until found, call useGA each time.
+    //alert(detEntry);
+    
+//attempted to keep within 12 - 43
 
-	if (detEntry > rangeMeas[1]){
-		//alert("Greater than GA");
-			GAA++;
-		useGA(GAA)
-		}	
-	else if (detEntry < rangeMeas[0]){		
-		//alert("Smaller than GA");
-		GAA--;
-		useGA(GAA);
-	}	
-	else {		
-	    
-		if (iterations > 0){
-            alert (iterations)
-		correctedRange = [dataTable[gaM], dataTable[gaSD]];
-        
-		}
+    if (detEntry > rangeMeas[1] && GAA < 43) {
+        //alert("Greater than GA");
+        GAA++;
+        useGA(GAA)
+    }
+    else if (detEntry < rangeMeas[0] && GAA > 12) {
+        //alert("Smaller than GA");
+        GAA--;
+        useGA(GAA);
+    }
+    else {
+
+        if (iterations > 0) {
+            alert(iterations)
+            correctedRange = [dataTable[gaM], dataTable[gaSD]];
+
+        }
+        //need to make between 12 and 43
         correctedRange = [dataTable[gaM], dataTable[gaSD]];
         generate_report();
-	}
-iterations++;
+    }
+    iterations++;
 
 }
 
@@ -280,7 +283,7 @@ iterations++;
 
 var resetUse = function () {
     var detAge = detA.options[detA.selectedIndex].value;
-    if (FL.value != "" && bodyWeight != "") {
+    if ((FL.value != "" && detAge === "Foot Length") || (bodyWeight.value != "" && detAge === "Body Weight")) {
         if (detAge === "Foot Length") {
 
             useDet = 0;
@@ -304,10 +307,20 @@ var resetUse = function () {
 
     }
 
-    if (FL.value === "" || bodyWeight === "") {
-        alert("You need to enter a foot length and a body weight");
-    }
+    else {
+        alert("You need to insert a value for " + detAge)
+        if (detAge === "Foot Length") {
+            FL.style.background = "yellow";
+        }
+        else { bodyWeight.style.background = "yellow"; }
 
+        }
+
+    /*
+    if (FL.value === "" || bodyWeight === "") {
+    alert("You need to enter a foot length and a body weight");
+    }
+    */
 
 }
 
@@ -328,7 +341,10 @@ var stop = function () { };
             } 
 		else if (evt.which === 27) {
              // The user pressed "Escape".
-		document.getElementById('report-output').style.display = 'none';
+		
+        
+        document.getElementById('report-output').style.display = 'none';
+        
                 //it reaches here but doesn't close display!!!
                
             }
@@ -362,6 +378,7 @@ var stop = function () { };
      generate_expected();
      if (GAA != GA.value) {
          generate_corrected();
+         document.getElementById('report-output').style.height = "400px";
      }
      $('#report-output').text("The expected measurements for:" + " " + GA.value + " " + "weeks" + "\r\n" + textString);
      //will use ex: body weight = 4000 (expected range for GA is 3000 - 3500 grams)
@@ -402,7 +419,7 @@ var stop = function () { };
         
          trimmedCorrectedSD = trimmer(correctedRange[1]);
          
-         textString = textString + "\r\n" + "\r\n" + "The corrected measurements for :" + " " + GAA + " " + "weeks" +"\r\n"
+         textString = textString + "\r\n" + "\r\n" + "Most compatible measurements for :" + " " + GAA + " " + "weeks" +"\r\n"
          for (var i = 0; i < labels.length; i++) {
              //store new range for actual values and text	
              //trimmedExpected, trimmedCorrected
@@ -483,7 +500,7 @@ function drawVisualization() {
 var stopNumber = 0;
 var data = new google.visualization.DataTable();
 data.addColumn('string','Measurements')
-var myLabels = ['Actual values', 'Expected Means' + " " + GA.value + " weeks", 'SD', 'Min', 'Max', 'Corrected Means' + " " + GAA + " weeks", 'SD', 'Min', 'Max'];
+var myLabels = ['Actual values', 'Expected Means' + " " + GA.value + " weeks", 'SD', 'Min', 'Max', 'Most Compatible Means' + " " + GAA + " weeks", 'SD', 'Min', 'Max'];
 
 if (GAA == GA.value) {
     stopNumber = 4;
@@ -503,7 +520,18 @@ for (var j = 0; j < labels.length; j++) {
     //data.setRowProperties(j, {'style' : 'italic-purple-font large-font'} );
     if (actualRange[j] > trimmedExpected[j] + 2 * trimmedExpectedSD[j] || actualRange[j] < trimmedExpected[j] - 2 * trimmedExpectedSD[j]){
         
-        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'red-border left-text'});
+        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'yellow-border left-text'});
+    }
+    if (GA != GAA && actualRange[j] > trimmedCorrected[j] + 2 * trimmedCorrectedSD[j] || actualRange[j] < trimmedCorrected[j] - 2 * trimmedCorrectedSD[j]){
+        
+        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'italic-red-font left-text'});
+    }
+
+
+    if ((GA != GAA && actualRange[j] > trimmedCorrected[j] + 2 * trimmedCorrectedSD[j] || actualRange[j] < trimmedCorrected[j] - 2 * trimmedCorrectedSD[j])&&
+    (actualRange[j] > trimmedExpected[j] + 2 * trimmedExpectedSD[j] || actualRange[j] < trimmedExpected[j] - 2 * trimmedExpectedSD[j])){
+        
+        data.setCell(j, 1, parseFloat(actualRange [j]), null, {'className': 'italic-red-font yellow-border left-text'});
     }
     //setRowProperty(rowIndex, name, value)
 };
@@ -522,7 +550,7 @@ function convertTable(){
     
     if (GAA == GA.value){
         for (var i = 0; i < labels.length ; i++){
-        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10,  Math.round([parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10/10) ]
+        convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]]*10)/10,  Math.round( [parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10)/10 ]
                 
  
         }
@@ -530,8 +558,8 @@ function convertTable(){
     }
     else {
         for (var i = 0; i < labels.length; i++) {
-            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10, Math.round([parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedCorrected[i]),
-        parseFloat(trimmedCorrectedSD[i]),  Math.round([ parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2]*10)/10,  Math.round([parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]*10)/10]
+            convertedTable[i] = [labels[i], parseFloat(actualRange[i]), parseFloat(trimmedExpected[i]), trimmedExpectedSD[i], Math.round([parseFloat(trimmedExpected[i]) - 2 * trimmedExpectedSD[i]] * 10) / 10,  Math.round([parseFloat(trimmedExpected[i]) + 2 * trimmedExpectedSD[i]]*10)/10, parseFloat(trimmedCorrected[i]),
+        parseFloat(trimmedCorrectedSD[i]),  Math.round([parseFloat(trimmedCorrected[i]) - trimmedCorrectedSD[i] * 2]*10)/10,  Math.round([parseFloat(trimmedCorrected[i]) + 2 * trimmedCorrectedSD[i]]*10)/10]
         }
  
     }
