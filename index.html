@@ -23,71 +23,73 @@
 </div>
 <div class="control-group">
 </div>
-<table>
+
+            
+<table id= "formTable">
 <tr>
     <td>
 <form name = "form1" id="form_1">
 
-Gestational Age: <input type="number" name="Gestational Age" id ="GA" value=" ">
+Gestational Age (weeks): <input type="number" name="Gestational Age " id ="GA" value=" ">
 
 <div>
-Foot Length: <input type="number" name="Foot Length" id ="FL" value=" ">
+Foot Length (mm): <input type="number" name="Foot Length" id ="FL" value=" ">
 </div>
 
 <div>
-Crown Rump: <input type="number" name="Crown Rump" id="CR" value=" ">
+Crown Rump (cm): <input type="number" name="Crown Rump" id="CR" value=" ">
 </div>
 
 <div>
-Crown Heel: <input type="number" name="Crown Heel" id="CH" value=" ">
+Crown Heel  (cm): <input type="number" name="Crown Heel" id="CH" value=" ">
 </div>
 
 <div>
-Head Circumference: <input type="number" name="Head Circumference" id="HC"  value=" ">
+Head Circumference (cm): <input type="number" name="Head Circumference" id="HC"  value=" ">
 </div>
 
 <div>
-Chest Circumference: <input type="number" name="Chest Circumference" id="CC" value=" ">
+Chest Circumference (cm): <input type="number" name="Chest Circumference" id="CC" value=" ">
 </div>
 
 <div>
-Abdominal Circumference: <input type="number" name="Abdominal Circumference" id="AC"  value=" ">
+Abdominal Circumference (cm): <input type="number" name="Abdominal Circumference" id="AC"  value=" ">
 </div>
 
 <div>
-Body Weight: <input type="number" name="Body Weight" id="bodyWeight"  value=" ">
+Body Weight (g): <input type="number" name="Body Weight" id="bodyWeight"  value=" ">
 </div>
 
 <div>
-Brain Weight: <input type="number" name="Brain Weight" id="BW"  value=" ">
+Brain Weight (g): <input type="number" name="Brain Weight" id="BW"  value=" ">
 </div>
 
 <div>
-Liver Weight: <input type="number" name="Liver Weight" id="LVW" value=" ">
+Liver Weight (g): <input type="number" name="Liver Weight" id="LVW" value=" ">
 </div>
 
 <div>
-Lung Weight: <input type="number" name="Lung Weight" id="LUW"  value=" ">
+Lung Weight (g): <input type="number" name="Lung Weight" id="LUW"  value=" ">
 </div>
 
 <div>
-Heart Weight: <input type="number" name="Hear Weight" id="HW" value=" ">
+Heart Weight (g): <input type="number" name="Hear Weight" id="HW" value=" ">
 </div>
 
 <div>
-Thymus Weight: <input type="number" name="Thymus Weight" id="TW" value=" ">
+Thymus Weight (g): <input type="number" name="Thymus Weight" id="TW" value=" ">
 </div>
 
 <div>
-Spleen Weight: <input type="number" name="Spleen Weight" id="SW" value=" ">
+Spleen Weight (g): <input type="number" name="Spleen Weight" id="SW" value=" ">
 </div>
 
 <div>
-Kidneys Weight: <input type="number" name="Kidneys Weight" id="KW" value=" ">
+Kidneys Weight (g): <input type="number" name="Kidneys Weight" id="KW" value=" ">
 </div>
 
 <div>
-Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW" value=" ">
+Adrenals Weight (g): <input type="number" name="Adrenals Weight" id="AW" value=" ">
 </div>
     
 </form>
@@ -110,18 +112,27 @@ Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW" value=" ">
     
     </select>
      </div>
+
+
+        <!--select boxes for gender, race and possible entry for disorderand cultures-->
+
+
  </form> 
     </td>
   </tr>
 </table>
  <br></br>
  <input type="button" value="Submit" id ="submit" >
-
+<div id="legend">Key:</div>
+<div id= "yellowborder">Number outside expected range</div>
+<div id ="separator">    /    </div>
+<div id="redfont">Number outside the most compatible range</div>
+           
+<div id="table"></div>
+<br></br>
 <div>
 <textarea class="popup" id="report-output"></textarea>
 </div>
-           
-<div id="table"></div>
 
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="javaCode.js"></script>
@@ -129,7 +140,12 @@ Adrenals Weight: <input type="number" name="Adrenals Weight" id="AW" value=" ">
    
 </div>  
 
+ <div id = "footer">
+ <p>Posted by: Matthew Cain, MD; Ona Faye-Petersen, MD; and Joseph Siebert, PhD</p>
+ 
+ </div> 
  </body>
-     
+
+   
     
 </html>
