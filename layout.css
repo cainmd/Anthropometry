@@ -1,14 +1,19 @@
 form {
     
 text-align: right;
-    
+ 
 width: 400px;
-   
+  
 border-style:solid;
 border-width:5px; 
 background-color : white;
 }
 
+
+formTable{
+   // top: 1000px;
+    
+}
 
 
 head h1,h2,h3{
@@ -19,20 +24,43 @@ head h1,h2,h3{
 
 body{
 
-background-color: DarkSlateBlue;
-background-size: 100% auto;
+//background-image:url('bodyBackground.jpg');
+background-color: #c0f5fb;
+
+//background-size: 100% auto;
 
 
-};    
+}   
 
+#legend{
+    padding-left:2cm;
+    display: inline-block;
+    font-style:  normal;
+    //color: white;
+}
 
+#yellowborder{
+    display: inline-block;
+    border: 3px solid gold;
+}
 
+#separator{
+    padding: 10px;
+    display: inline-block;
+    font-style:  normal;
+    //color: white;
+}
 
+#redfont{
+    font-style: italic;
+    display: inline-block;
+    color: red;
+}
 
 form_1.label{
     
 display: inline-block;
-    
+       
 //float: left;
     
 //clear: left;
@@ -45,7 +73,7 @@ left;
 
 
 
-.button, button{
+.button{
    
  text-align: right;
 
@@ -78,16 +106,24 @@ input {
  /*
     This class is used for the lightbox effect.
  */
-    font-size: xx-large;
+ 
+ /*  
     display: none;
     height: 82%;
-    left: 19%;
+    left: 30%;
+    
+    //left: 19%;
     padding: 1ex;
     position: fixed;
     top: 10%;
-    width: 62%;
-    z-index: 1;
     
+    z-index: 1;
+ */ 
+  height: 400px;
+  font-size: large;
+  width: 44%;
+  display: none;
+  border: 3px solid black;
 }
 
 
@@ -125,6 +161,10 @@ input {
     font-style: italic;
     color: purple;
   }
+ .italic-red-font {
+    font-style: italic;
+    color: red;
+  }
 
   .underline-blue-font {
     text-decoration: underline;
@@ -139,6 +179,9 @@ input {
     border: 3px solid red;
   }
 
+.yellow-border {
+    border: 3px solid yellow;
+  }
   .orange-background {
     background-color: orange;
   }
