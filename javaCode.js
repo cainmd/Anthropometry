@@ -3,18 +3,14 @@
    
 
 
-
+/*
 if (window.hasOwnProperty('jQuery') === false) {
      // NOTE: It also needs to be version 1.7.2. I have had trouble getting it
      // to work with "newer" versions of jQuery, and I'm not sure why yet ...
         throw new Error('jQuery is missing.');
     }
+*/
 
- // Declarations
-
-
- 
- // Definitions
     
 var $ = window.jQuery;
 
